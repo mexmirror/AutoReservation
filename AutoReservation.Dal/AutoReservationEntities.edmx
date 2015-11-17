@@ -153,7 +153,7 @@
             <End Role="Reservation" EntitySet="Reservations" />
           </AssociationSet>
           </EntityContainer>
-        <EntityType Name="StandardAutos" BaseType="AutoReservationModel.Auto" />
+        <EntityType Name="StandardAuto" BaseType="AutoReservationModel.Auto" />
         <EntityType Name="MittelklasseAuto" BaseType="AutoReservationModel.Auto" />
         <EntityType Name="LuxusklasseAuto" BaseType="AutoReservationModel.Auto" />
       </Schema>

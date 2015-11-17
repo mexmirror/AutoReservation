@@ -10,8 +10,8 @@
         <EntityTypeShape EntityType="AutoReservationModel.Reservation" Width="1.5" PointX="5.25" PointY="0.875" IsExpanded="true" />
         <AssociationConnector Association="AutoReservationModel.FK_Reservation_Auto" ManuallyRouted="false" />
         <AssociationConnector Association="AutoReservationModel.FK_Reservation_Kunde" ManuallyRouted="false" />
-        <EntityTypeShape EntityType="AutoReservationModel.StandardAutos" Width="1.5" PointX="4" PointY="4.5" />
-        <InheritanceConnector EntityType="AutoReservationModel.StandardAutos" />
+        <EntityTypeShape EntityType="AutoReservationModel.StandardAuto" Width="1.5" PointX="4" PointY="4.5" />
+        <InheritanceConnector EntityType="AutoReservationModel.StandardAuto" />
         <EntityTypeShape EntityType="AutoReservationModel.MittelklasseAuto" Width="1.5" PointX="2.25" PointY="4.5" />
         <InheritanceConnector EntityType="AutoReservationModel.MittelklasseAuto" />
         <EntityTypeShape EntityType="AutoReservationModel.LuxusklasseAuto" Width="1.5" PointX="0.5" PointY="4.5" />
