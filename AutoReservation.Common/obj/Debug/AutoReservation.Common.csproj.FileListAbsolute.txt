@@ -1,0 +1,10 @@
+C:\Users\olivi\Development\AutoReservation\AutoReservation.Common\bin\Debug\AutoReservation.Common.dll.config
+C:\Users\olivi\Development\AutoReservation\AutoReservation.Common\bin\Debug\AutoReservation.Common.dll
+C:\Users\olivi\Development\AutoReservation\AutoReservation.Common\bin\Debug\AutoReservation.Common.pdb
+C:\Users\olivi\Development\AutoReservation\AutoReservation.Common\bin\Debug\EntityFramework.dll
+C:\Users\olivi\Development\AutoReservation\AutoReservation.Common\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\olivi\Development\AutoReservation\AutoReservation.Common\bin\Debug\EntityFramework.xml
+C:\Users\olivi\Development\AutoReservation\AutoReservation.Common\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\olivi\Development\AutoReservation\AutoReservation.Common\obj\Debug\AutoReservation.Common.csprojResolveAssemblyReference.cache
+C:\Users\olivi\Development\AutoReservation\AutoReservation.Common\obj\Debug\AutoReservation.Common.dll
+C:\Users\olivi\Development\AutoReservation\AutoReservation.Common\obj\Debug\AutoReservation.Common.pdb

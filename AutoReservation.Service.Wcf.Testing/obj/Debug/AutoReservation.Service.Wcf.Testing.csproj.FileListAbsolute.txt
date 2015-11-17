@@ -1,0 +1,1 @@
+C:\Users\olivi\Development\AutoReservation\AutoReservation.Service.Wcf.Testing\obj\Debug\AutoReservation.Service.Wcf.Testing.csprojResolveAssemblyReference.cache

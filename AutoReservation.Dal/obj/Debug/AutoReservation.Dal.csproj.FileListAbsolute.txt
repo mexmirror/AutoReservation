@@ -1,0 +1,9 @@
+C:\Users\olivi\Development\AutoReservation\AutoReservation.Dal\bin\Debug\AutoReservation.Dal.dll
+C:\Users\olivi\Development\AutoReservation\AutoReservation.Dal\bin\Debug\AutoReservation.Dal.pdb
+C:\Users\olivi\Development\AutoReservation\AutoReservation.Dal\bin\Debug\EntityFramework.dll
+C:\Users\olivi\Development\AutoReservation\AutoReservation.Dal\bin\Debug\EntityFramework.SqlServer.dll
+C:\Users\olivi\Development\AutoReservation\AutoReservation.Dal\bin\Debug\EntityFramework.xml
+C:\Users\olivi\Development\AutoReservation\AutoReservation.Dal\bin\Debug\EntityFramework.SqlServer.xml
+C:\Users\olivi\Development\AutoReservation\AutoReservation.Dal\obj\Debug\AutoReservation.Dal.csprojResolveAssemblyReference.cache
+C:\Users\olivi\Development\AutoReservation\AutoReservation.Dal\obj\Debug\AutoReservation.Dal.dll
+C:\Users\olivi\Development\AutoReservation\AutoReservation.Dal\obj\Debug\AutoReservation.Dal.pdb

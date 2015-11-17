@@ -1,0 +1,1 @@
+C:\Users\olivi\Development\AutoReservation\AutoReservation.BusinessLayer.Testing\obj\Debug\AutoReservation.BusinessLayer.Testing.csprojResolveAssemblyReference.cache
