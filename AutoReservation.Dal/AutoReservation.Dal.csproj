@@ -109,7 +109,7 @@
     <Compile Include="Reservation.cs">
       <DependentUpon>AutoReservationEntities.tt</DependentUpon>
     </Compile>
-    <Compile Include="StandardAuto.cs">
+    <Compile Include="StandardAutos.cs">
       <DependentUpon>AutoReservationEntities.tt</DependentUpon>
     </Compile>
   </ItemGroup>

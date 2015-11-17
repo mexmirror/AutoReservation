@@ -7,18 +7,18 @@ namespace AutoReservation.Common.DataTransferObjects
 {
     public class AutoDto : DtoBase<AutoDto>
     {
-        private double _basistarif;
-        private long _id;
+        private int? _basistarif;
+        private int _id;
         private string _marke;
-        private double _tagestarif;
+        private int _tagestarif;
         private AutoKlasse _autoKlasse;
 
-        public double Basistarif
+        public int? Basistarif
         {
             get { return _basistarif; }
             set
             {
-                if (Math.Abs(_basistarif - value) <= Math.Abs(_basistarif*.00001))
+                if (_basistarif == value)
                 {
                     return;
                 }
@@ -27,7 +27,7 @@ namespace AutoReservation.Common.DataTransferObjects
             }
         }
 
-        public long Id
+        public int Id
         {
             get { return _id; }
             set
@@ -55,7 +55,7 @@ namespace AutoReservation.Common.DataTransferObjects
             }
         }
 
-        public double Tagestarif
+        public int Tagestarif
         {
             get { return _tagestarif; }
             set

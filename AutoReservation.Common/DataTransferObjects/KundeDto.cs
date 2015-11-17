@@ -8,7 +8,7 @@ namespace AutoReservation.Common.DataTransferObjects
     public class KundeDto : DtoBase<KundeDto>
     {
         private DateTime _geburtstdatum;
-        private long _id;
+        private int _id;
         private string _nachname;
         private string _vorname;
 
@@ -26,7 +26,7 @@ namespace AutoReservation.Common.DataTransferObjects
             }
         }
 
-        public long Id
+        public int Id
         {
             get { return _id; }
             set
