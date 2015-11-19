@@ -11,23 +11,23 @@ namespace AutoReservation.BusinessLayer
     {
         public static Task<List<Auto>> GetCars(AutoReservationEntities context)
         {
-            return context.Autoes.ToListAsync();
+            return context.Autos.ToListAsync();
         }
 
         public static Task<Auto> GetCar(AutoReservationEntities context, int id)
         {
-            return context.Autoes.FindAsync(id);
+            return context.Autos.FindAsync(id);
         }
 
         public static void InsertCar(AutoReservationEntities context, Auto car)
         {
-            context.Autoes.Add(car);
+            context.Autos.Add(car);
             context.SaveChangesAsync();
         }
 
         public static void UpdateCar(AutoReservationEntities context, Auto modified, Auto original)
         {
-            context.Autoes.Attach(modified);
+            context.Autos.Attach(modified);
             try
             {
                 context.SaveChangesAsync();
@@ -40,8 +40,8 @@ namespace AutoReservation.BusinessLayer
 
         public static void DeleteCar(AutoReservationEntities context, Auto car)
         {
-            context.Autoes.Attach(car);
-            context.Autoes.Remove(car);
+            context.Autos.Attach(car);
+            context.Autos.Remove(car);
             context.SaveChangesAsync();
         }
 
