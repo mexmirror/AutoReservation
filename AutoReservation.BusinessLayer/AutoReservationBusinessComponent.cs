@@ -1,5 +1,4 @@
-﻿using System.Collections;
-using System.Collections.Generic;
+﻿using System.Collections.Generic;
 using System.Data.Entity;
 using System.Data.Entity.Infrastructure;
 using System.Threading.Tasks;
@@ -9,113 +8,115 @@ namespace AutoReservation.BusinessLayer
 {
     public class AutoReservationBusinessComponent
     {
-        public static Task<List<Auto>> GetCars(AutoReservationEntities context)
+        private static readonly AutoReservationEntities _context = new AutoReservationEntities();
+
+        public static Task<List<Auto>> GetCars()
         {
-            return context.Autoes.ToListAsync();
+            return _context.Autoes.ToListAsync();
         }
 
-        public static Task<Auto> GetCar(AutoReservationEntities context, int id)
+        public static Task<Auto> GetCar(int id)
         {
-            return context.Autoes.FindAsync(id);
+            return _context.Autoes.FindAsync(id);
         }
 
-        public static void InsertCar(AutoReservationEntities context, Auto car)
+        public static void InsertCar(Auto car)
         {
-            context.Autoes.Add(car);
-            context.SaveChangesAsync();
+            _context.Autoes.Add(car);
+            _context.SaveChangesAsync();
         }
 
-        public static void UpdateCar(AutoReservationEntities context, Auto modified, Auto original)
+        public static void UpdateCar(Auto modified, Auto original)
         {
-            context.Autoes.Attach(modified);
+            _context.Autoes.Attach(modified);
             try
             {
-                context.SaveChangesAsync();
+                _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException e)
             {
-                HandleDbConcurrencyException(context, original);
+                HandleDbConcurrencyException(_context, original);
             }
         }
 
-        public static void DeleteCar(AutoReservationEntities context, Auto car)
+        public static void DeleteCar(Auto car)
         {
-            context.Autoes.Attach(car);
-            context.Autoes.Remove(car);
-            context.SaveChangesAsync();
+            _context.Autoes.Attach(car);
+            _context.Autoes.Remove(car);
+            _context.SaveChangesAsync();
         }
 
-        public static Task<List<Reservation>> GetReservations(AutoReservationEntities context)
+        public static Task<List<Reservation>> GetReservations()
         {
-            return context.Reservations.ToListAsync();
+            return _context.Reservations.ToListAsync();
         }
 
-        public static Task<Reservation> GetReservation(AutoReservationEntities context, int id)
+        public static Task<Reservation> GetReservation(int id)
         {
-            return context.Reservations.FindAsync(id);
+            return _context.Reservations.FindAsync(id);
         }
 
-        public void InsertReservation(AutoReservationEntities context, Reservation reservation)
+        public static void InsertReservation(Reservation reservation)
         {
-            context.Reservations.Add(reservation);
-            context.SaveChangesAsync();
+            _context.Reservations.Add(reservation);
+            _context.SaveChangesAsync();
         }
 
-        public void UpdateReservation(AutoReservationEntities context, Reservation modified, Reservation original)
+        public static void UpdateReservation(Reservation modified, Reservation original)
         {
-            context.Reservations.Attach(modified);
+            _context.Reservations.Attach(modified);
             try
             {
-                context.SaveChangesAsync();
+                _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException e)
             {
-                HandleDbConcurrencyException(context, original);
+                HandleDbConcurrencyException(_context, original);
             }
         }
 
-        public void DeleteReservation(AutoReservationEntities context, Reservation reservation)
+        public static void DeleteReservation(Reservation reservation)
         {
-            context.Reservations.Attach(reservation);
-            context.Reservations.Remove(reservation);
-            context.SaveChangesAsync();
+            _context.Reservations.Attach(reservation);
+            _context.Reservations.Remove(reservation);
+            _context.SaveChangesAsync();
         }
 
-        public static Task<List<Kunde>> GetCustomers(AutoReservationEntities context)
+        public static Task<List<Kunde>> GetCustomers()
         {
-            return context.Kundes.ToListAsync();
+            return _context.Kundes.ToListAsync();
         }
 
-        public static Task<Kunde> GetCustomer(AutoReservationEntities context, int id)
+        public static Task<Kunde> GetCustomer(int id)
         {
-            return context.Kundes.FindAsync(id);
+            return _context.Kundes.FindAsync(id);
         }
 
-        public static void InsertCustomer(AutoReservationEntities context, Kunde customer)
+        public static void InsertCustomer(Kunde customer)
         {
-            context.Kundes.Add(customer);
-            context.SaveChangesAsync();
+            _context.Kundes.Add(customer);
+            _context.SaveChangesAsync();
         }
 
-        public static void UpdateCustomer(AutoReservationEntities context, Kunde modified, Kunde original)
+        public static void UpdateCustomer(Kunde modified, Kunde original)
         {
-            context.Kundes.Attach(modified);
+            _context.Kundes.Attach(modified);
             try
             {
-                context.SaveChangesAsync();
+                _context.SaveChangesAsync();
             }
             catch (DbUpdateConcurrencyException e)
             {
-                HandleDbConcurrencyException(context, original);
+                HandleDbConcurrencyException(_context, original);
             }
 
         }
 
-        public static void DeleteCustomer(AutoReservationEntities context, Kunde customer)
+        public static void DeleteCustomer(Kunde customer)
         {
-            context.Kundes.Attach(customer);
-            context.Kundes.Remove(customer);
-            context.SaveChangesAsync();
+            _context.Kundes.Attach(customer);
+            _context.Kundes.Remove(customer);
+            _context.SaveChangesAsync();
         }
 
         private static void HandleDbConcurrencyException<T>(AutoReservationEntities context, T original) where T : class
