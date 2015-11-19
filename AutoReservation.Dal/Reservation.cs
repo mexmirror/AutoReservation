@@ -14,7 +14,7 @@ namespace AutoReservation.Dal
     
     public partial class Reservation
     {
-        public int ReservationId { get; set; }
+        public int ReservationNr { get; set; }
         public int AutoId { get; set; }
         public int KundeId { get; set; }
         public System.DateTime Von { get; set; }

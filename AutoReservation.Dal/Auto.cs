@@ -12,7 +12,7 @@ namespace AutoReservation.Dal
     using System;
     using System.Collections.Generic;
     
-    public partial class Auto
+    public abstract partial class Auto
     {
         [System.Diagnostics.CodeAnalysis.SuppressMessage("Microsoft.Usage", "CA2214:DoNotCallOverridableMethodsInConstructors")]
         public Auto()
@@ -22,7 +22,6 @@ namespace AutoReservation.Dal
     
         public int Id { get; set; }
         public string Marke { get; set; }
-        public int AutoKlasse { get; set; }
         public int Tagestarif { get; set; }
         public Nullable<int> Basistarif { get; set; }
     

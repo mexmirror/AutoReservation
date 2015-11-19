@@ -11,7 +11,7 @@
           </Key>
           <Property Name="Id" Type="int" StoreGeneratedPattern="Identity" Nullable="false" />
           <Property Name="Marke" Type="nvarchar" MaxLength="20" Nullable="false" />
-          <Property Name="AutoKlasse" Type="int" Nullable="false" />
+          <Property Name="AutoKlasse" Type="int" Nullable="false" DefaultValue="2"/>
           <Property Name="Tagestarif" Type="int" Nullable="false" />
           <Property Name="Basistarif" Type="int" />
         </EntityType>
@@ -79,13 +79,12 @@
     <!-- CSDL content -->
     <edmx:ConceptualModels>
       <Schema Namespace="AutoReservationModel" Alias="Self" annotation:UseStrongSpatialTypes="false" xmlns:annotation="http://schemas.microsoft.com/ado/2009/02/edm/annotation" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm">
-        <EntityType Name="Auto">
+        <EntityType Name="Auto" Abstract="true">
           <Key>
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Marke" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="AutoKlasse" Type="Int32" Nullable="false" />
           <Property Name="Tagestarif" Type="Int32" Nullable="false" />
           <Property Name="Basistarif" Type="Int32" />
           <NavigationProperty Name="Reservations" Relationship="Self.FK_Reservation_Auto" FromRole="Auto" ToRole="Reservation" />
@@ -102,9 +101,9 @@
         </EntityType>
         <EntityType Name="Reservation">
           <Key>
-            <PropertyRef Name="ReservationId" />
+            <PropertyRef Name="ReservationNr" />
           </Key>
-          <Property Name="ReservationId" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
+          <Property Name="ReservationNr" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="AutoId" Type="Int32" Nullable="false" />
           <Property Name="KundeId" Type="Int32" Nullable="false" />
           <Property Name="Von" Type="DateTime" Nullable="false" Precision="3" />
@@ -141,11 +140,11 @@
           </ReferentialConstraint>
         </Association>
         <EntityContainer Name="AutoReservationEntities" annotation:LazyLoadingEnabled="true">
-          <EntitySet Name="Autoes" EntityType="Self.Auto" />
+          <EntitySet Name="Autos" EntityType="Self.Auto" />
           <EntitySet Name="Kundes" EntityType="Self.Kunde" />
           <EntitySet Name="Reservations" EntityType="Self.Reservation" />
           <AssociationSet Name="FK_Reservation_Auto" Association="Self.FK_Reservation_Auto">
-            <End Role="Auto" EntitySet="Autoes" />
+            <End Role="Auto" EntitySet="Autos" />
             <End Role="Reservation" EntitySet="Reservations" />
           </AssociationSet>
           <AssociationSet Name="FK_Reservation_Kunde" Association="Self.FK_Reservation_Kunde">
@@ -153,7 +152,8 @@
             <End Role="Reservation" EntitySet="Reservations" />
           </AssociationSet>
           </EntityContainer>
-        <EntityType Name="StandardAuto" BaseType="AutoReservationModel.Auto" />
+        <EntityType Name="StandardAuto" BaseType="AutoReservationModel.Auto" >
+        </EntityType>
         <EntityType Name="MittelklasseAuto" BaseType="AutoReservationModel.Auto" />
         <EntityType Name="LuxusklasseAuto" BaseType="AutoReservationModel.Auto" />
       </Schema>
@@ -162,14 +162,31 @@
     <edmx:Mappings>
       <Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
         <EntityContainerMapping StorageEntityContainer="AutoReservationModelStoreContainer" CdmEntityContainer="AutoReservationEntities">
-          <EntitySetMapping Name="Autoes">
+          <EntitySetMapping Name="Autos">
             <EntityTypeMapping TypeName="IsTypeOf(AutoReservationModel.Auto)">
               <MappingFragment StoreEntitySet="Auto">
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <ScalarProperty Name="Basistarif" ColumnName="Basistarif" />
                 <ScalarProperty Name="Tagestarif" ColumnName="Tagestarif" />
-                <ScalarProperty Name="AutoKlasse" ColumnName="AutoKlasse" />
                 <ScalarProperty Name="Marke" ColumnName="Marke" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(AutoReservationModel.LuxusklasseAuto)">
+              <MappingFragment StoreEntitySet="Auto">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <Condition ColumnName="AutoKlasse" Value="0" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(AutoReservationModel.MittelklasseAuto)">
+              <MappingFragment StoreEntitySet="Auto">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <Condition ColumnName="AutoKlasse" Value="1" />
+              </MappingFragment>
+            </EntityTypeMapping>
+            <EntityTypeMapping TypeName="IsTypeOf(AutoReservationModel.StandardAuto)">
+              <MappingFragment StoreEntitySet="Auto">
+                <ScalarProperty Name="Id" ColumnName="Id" />
+                <Condition ColumnName="AutoKlasse" Value="2" />
               </MappingFragment>
             </EntityTypeMapping>
           </EntitySetMapping>
@@ -186,7 +203,7 @@
           <EntitySetMapping Name="Reservations">
             <EntityTypeMapping TypeName="AutoReservationModel.Reservation">
               <MappingFragment StoreEntitySet="Reservation">
-                <ScalarProperty Name="ReservationId" ColumnName="Id" />
+                <ScalarProperty Name="ReservationNr" ColumnName="Id" />
                 <ScalarProperty Name="AutoId" ColumnName="AutoId" />
                 <ScalarProperty Name="KundeId" ColumnName="KundeId" />
                 <ScalarProperty Name="Von" ColumnName="Von" />

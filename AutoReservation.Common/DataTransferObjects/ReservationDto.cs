@@ -9,7 +9,7 @@ namespace AutoReservation.Common.DataTransferObjects
     {
         private DateTime _bis;
         private DateTime _von;
-        private long _reservationsNr;
+        private int _reservationsNr;
         private AutoDto _auto;
         private KundeDto _kunde;
 
@@ -41,7 +41,7 @@ namespace AutoReservation.Common.DataTransferObjects
             }
         }
 
-        public long ReservationNr
+        public int ReservationNr
         {
             get { return _reservationsNr; }
             set
