@@ -173,6 +173,7 @@
             </EntityTypeMapping>
             <EntityTypeMapping TypeName="IsTypeOf(AutoReservationModel.LuxusklasseAuto)">
               <MappingFragment StoreEntitySet="Auto">
+                <ScalarProperty Name="Basistarif" ColumnName="Basistarif" />
                 <ScalarProperty Name="Id" ColumnName="Id" />
                 <Condition ColumnName="AutoKlasse" Value="0" />
               </MappingFragment>
