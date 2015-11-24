@@ -86,7 +86,6 @@
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
           <Property Name="Marke" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
           <Property Name="Tagestarif" Type="Int32" Nullable="false" />
-          <Property Name="Basistarif" Type="Int32" />
           <NavigationProperty Name="Reservations" Relationship="Self.FK_Reservation_Auto" FromRole="Auto" ToRole="Reservation" />
         </EntityType>
         <EntityType Name="Kunde">
@@ -155,7 +154,9 @@
         <EntityType Name="StandardAuto" BaseType="AutoReservationModel.Auto" >
         </EntityType>
         <EntityType Name="MittelklasseAuto" BaseType="AutoReservationModel.Auto" />
-        <EntityType Name="LuxusklasseAuto" BaseType="AutoReservationModel.Auto" />
+        <EntityType Name="LuxusklasseAuto" BaseType="AutoReservationModel.Auto" >
+          <Property Name="Basistarif" Type="Int32" />
+        </EntityType>
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->
@@ -166,7 +167,6 @@
             <EntityTypeMapping TypeName="IsTypeOf(AutoReservationModel.Auto)">
               <MappingFragment StoreEntitySet="Auto">
                 <ScalarProperty Name="Id" ColumnName="Id" />
-                <ScalarProperty Name="Basistarif" ColumnName="Basistarif" />
                 <ScalarProperty Name="Tagestarif" ColumnName="Tagestarif" />
                 <ScalarProperty Name="Marke" ColumnName="Marke" />
               </MappingFragment>
