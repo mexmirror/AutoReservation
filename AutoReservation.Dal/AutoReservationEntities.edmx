@@ -151,12 +151,11 @@
             <End Role="Reservation" EntitySet="Reservations" />
           </AssociationSet>
           </EntityContainer>
-        <EntityType Name="StandardAuto" BaseType="AutoReservationModel.Auto" >
-        </EntityType>
         <EntityType Name="MittelklasseAuto" BaseType="AutoReservationModel.Auto" />
         <EntityType Name="LuxusklasseAuto" BaseType="AutoReservationModel.Auto" >
           <Property Name="Basistarif" Type="Int32" />
         </EntityType>
+        <EntityType Name="StandardAuto" BaseType="AutoReservationModel.Auto" />
       </Schema>
     </edmx:ConceptualModels>
     <!-- C-S mapping content -->

@@ -16,6 +16,8 @@
         <InheritanceConnector EntityType="AutoReservationModel.MittelklasseAuto" />
         <EntityTypeShape EntityType="AutoReservationModel.LuxusklasseAuto" Width="1.5" PointX="0.5" PointY="4.5" />
         <InheritanceConnector EntityType="AutoReservationModel.LuxusklasseAuto" />
+        <EntityTypeShape EntityType="AutoReservationModel.StandardAuto" Width="1.5" PointX="4.25" PointY="4.5" />
+        <InheritanceConnector EntityType="AutoReservationModel.StandardAuto" />
       </Diagram>
     </edmx:Diagrams>
   </edmx:Designer>
