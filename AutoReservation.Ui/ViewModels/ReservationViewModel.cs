@@ -107,7 +107,7 @@ namespace AutoReservation.Ui.ViewModels
             }
         }
 
-        protected override void Load()
+        protected override async void Load()
         {
             Reservationen.Clear();
             reservationenOriginal.Clear();
@@ -115,15 +115,15 @@ namespace AutoReservation.Ui.ViewModels
             Kunden.Clear();
             Autos.Clear();
 
-            foreach (KundeDto kunde in Service.Kunden)
+            foreach (KundeDto kunde in await Service.GetCustomers())
             {
                 Kunden.Add(kunde);
             }
-            foreach (AutoDto auto in Service.Autos)
+            foreach (AutoDto auto in await Service.GetCars())
             {
                 Autos.Add(auto);
             }
-            foreach (ReservationDto reservation in Service.Reservationen)
+            foreach (ReservationDto reservation in await Service.GetReservations())
             {
                 Reservationen.Add(reservation);
                 reservationenOriginal.Add((ReservationDto)reservation.Clone());

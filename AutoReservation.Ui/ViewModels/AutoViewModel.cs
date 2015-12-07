@@ -52,11 +52,11 @@ namespace AutoReservation.Ui.ViewModels
             }
         }
 
-        protected override void Load()
+        protected override async void Load()
         {
             Autos.Clear();
             autosOriginal.Clear();
-            foreach (var auto in Service.Autos)
+            foreach (var auto in await Service.GetCars())
             {
                 Autos.Add(auto);
                 autosOriginal.Add(auto.Clone());
@@ -89,12 +89,12 @@ namespace AutoReservation.Ui.ViewModels
             {
                 if (auto.Id == default(int))
                 {
-                    Service.InsertAuto(auto);
+                    Service.InsertCar(auto);
                 }
                 else
                 {
                     var original = autosOriginal.FirstOrDefault(ao => ao.Id == auto.Id);
-                    Service.UpdateAuto(auto, original);
+                    Service.UpdateCar(auto, original);
                 }
             }
             Load();
@@ -150,7 +150,7 @@ namespace AutoReservation.Ui.ViewModels
 
         private void Delete()
         {
-            Service.DeleteAuto(SelectedAuto);
+            Service.DeleteCar(SelectedAuto);
             Load();
         }
 
