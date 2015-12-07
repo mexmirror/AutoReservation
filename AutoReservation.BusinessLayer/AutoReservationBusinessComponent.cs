@@ -39,7 +39,7 @@ namespace AutoReservation.BusinessLayer
         {
             using (var context = new AutoReservationEntities())
             {
-                context.Autoes.Attach(modified);
+                context.Autos.Attach(modified);
                 try
                 {
                     context.SaveChangesAsync();
