@@ -1,8 +1,11 @@
 ﻿using System.Collections.Generic;
+using System.Data.Entity.Infrastructure;
+using System.ServiceModel;
 using System.Threading.Tasks;
 using AutoReservation.BusinessLayer;
 using AutoReservation.Common.DataTransferObjects;
 using AutoReservation.Common.Interfaces;
+using AutoReservation.Dal;
 
 namespace AutoReservation.Service.Wcf
 {
@@ -21,19 +24,27 @@ namespace AutoReservation.Service.Wcf
             return car.ConvertToDto();
         }
 
-        public void InsertCar(AutoDto car)
+        public async Task<AutoDto> InsertCar(AutoDto car)
         {
-            repo.InsertCar(car.ConvertToEntity());
+            return (await repo.InsertCar(car.ConvertToEntity())).ConvertToDto();
         }
 
-        public void UpdateCar(AutoDto modified, AutoDto original)
+        public async Task<AutoDto> UpdateCar(AutoDto modified, AutoDto original)
         {
-            repo.UpdateCar(modified.ConvertToEntity(), original.ConvertToEntity());
+            try
+            {
+                return (await repo.UpdateCar(modified.ConvertToEntity(), original.ConvertToEntity())).ConvertToDto();
+
+            }
+            catch (LocalOptimisticConcurrencyException<Auto> e)
+            {
+                throw new FaultException<AutoDto>(modified);
+            }
         }
 
-        public void DeleteCar(AutoDto car)
+        public async Task<AutoDto> DeleteCar(AutoDto car)
         {
-            repo.DeleteCar(car.ConvertToEntity());
+            return (await repo.DeleteCar(car.ConvertToEntity())).ConvertToDto();
         }
 
         public async Task<List<ReservationDto>> GetReservations()
@@ -48,19 +59,28 @@ namespace AutoReservation.Service.Wcf
             return reservation.ConvertToDto();
         }
 
-        public void InsertReservation(ReservationDto reservation)
+        public async Task<ReservationDto> InsertReservation(ReservationDto reservation)
         {
-            repo.InsertReservation(reservation.ConvertToEntity());
+            return (await repo.InsertReservation(reservation.ConvertToEntity())).ConvertToDto();
         }
 
-        public void UpdateReservation(ReservationDto modified, ReservationDto original)
+        public async Task<ReservationDto> UpdateReservation(ReservationDto modified, ReservationDto original)
         {
-            repo.UpdateReservation(modified.ConvertToEntity(), original.ConvertToEntity());
+            try
+            {
+                return
+                    (await repo.UpdateReservation(modified.ConvertToEntity(), original.ConvertToEntity())).ConvertToDto();
+
+            }
+            catch (LocalOptimisticConcurrencyException<Reservation> e)
+            {
+                throw new FaultException<ReservationDto>(modified);
+            }
         }
 
-        public void DeleteReservation(ReservationDto reservation)
+        public async Task<ReservationDto> DeleteReservation(ReservationDto reservation)
         {
-            repo.DeleteReservation(reservation.ConvertToEntity());
+            return (await repo.DeleteReservation(reservation.ConvertToEntity())).ConvertToDto();
         }
 
         public async Task<List<KundeDto>> GetCustomers()
@@ -75,19 +95,27 @@ namespace AutoReservation.Service.Wcf
             return customer.ConvertToDto();
         }
 
-        public void InsertCustomer(KundeDto customer)
+        public async Task<KundeDto> InsertCustomer(KundeDto customer)
         {
-            repo.InsertCustomer(customer.ConvertToEntity());
+            return (await repo.InsertCustomer(customer.ConvertToEntity())).ConvertToDto();
         }
 
-        public void UpdateCustomer(KundeDto modified, KundeDto original)
+        public async Task<KundeDto> UpdateCustomer(KundeDto modified, KundeDto original)
         {
-            repo.UpdateCustomer(modified.ConvertToEntity(), original.ConvertToEntity());
+            try
+            {
+                return
+                    (await repo.UpdateCustomer(modified.ConvertToEntity(), original.ConvertToEntity())).ConvertToDto();
+            }
+            catch (LocalOptimisticConcurrencyException<Kunde> e)
+            {
+                throw new FaultException<KundeDto>(modified);
+            }
         }
 
-        public void DeleteCustomer(KundeDto customer)
+        public async Task<KundeDto> DeleteCustomer(KundeDto customer)
         {
-            repo.DeleteCustomer(customer.ConvertToEntity());
+            return (await repo.DeleteCustomer(customer.ConvertToEntity())).ConvertToDto();
         }
     }
 }

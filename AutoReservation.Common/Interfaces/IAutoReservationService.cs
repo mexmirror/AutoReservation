@@ -13,32 +13,32 @@ namespace AutoReservation.Common.Interfaces
         [OperationContract]
         Task<AutoDto> GetCar(int id);
         [OperationContract]
-        void InsertCar(AutoDto car);
+        Task<AutoDto> InsertCar(AutoDto car);
         [OperationContract]
-        void UpdateCar(AutoDto modified, AutoDto original);
+        Task<AutoDto> UpdateCar(AutoDto modified, AutoDto original);
         [OperationContract]
-        void DeleteCar(AutoDto car);
+        Task<AutoDto> DeleteCar(AutoDto car);
 
         [OperationContract]
         Task<List<ReservationDto>> GetReservations();
         [OperationContract]
         Task<ReservationDto> GetReservation(int id);
         [OperationContract]
-        void InsertReservation(ReservationDto reservation);
+        Task<ReservationDto> InsertReservation(ReservationDto reservation);
         [OperationContract]
-        void UpdateReservation(ReservationDto modified, ReservationDto original);
+        Task<ReservationDto> UpdateReservation(ReservationDto modified, ReservationDto original);
         [OperationContract]
-        void DeleteReservation(ReservationDto reservation);
+        Task<ReservationDto> DeleteReservation(ReservationDto reservation);
 
         [OperationContract]
         Task<List<KundeDto>> GetCustomers();
         [OperationContract]
         Task<KundeDto> GetCustomer(int id);
         [OperationContract]
-        void InsertCustomer(KundeDto customer);
+        Task<KundeDto> InsertCustomer(KundeDto customer);
         [OperationContract]
-        void UpdateCustomer(KundeDto modified, KundeDto original);
+        Task<KundeDto> UpdateCustomer(KundeDto modified, KundeDto original);
         [OperationContract]
-        void DeleteCustomer(KundeDto customer);
+        Task<KundeDto> DeleteCustomer(KundeDto customer);
     }
 }

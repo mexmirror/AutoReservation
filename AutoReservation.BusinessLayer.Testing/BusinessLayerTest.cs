@@ -1,6 +1,5 @@
 ﻿using System;
 using System.Threading.Tasks;
-using AutoReservation.Dal;
 using AutoReservation.TestEnvironment;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 
@@ -9,18 +8,8 @@ namespace AutoReservation.BusinessLayer.Testing
     [TestClass]
     public class BusinessLayerTest
     {
-        private AutoReservationBusinessComponent target;
-        private AutoReservationBusinessComponent Target
-        {
-            get
-            {
-                if (target == null)
-                {
-                    target = new AutoReservationBusinessComponent();
-                }
-                return target;
-            }
-        }
+        private AutoReservationBusinessComponent _target;
+        private AutoReservationBusinessComponent Target => _target ?? (_target = new AutoReservationBusinessComponent());
 
 
         [TestInitialize]
@@ -36,7 +25,7 @@ namespace AutoReservation.BusinessLayer.Testing
             var modifiedCar = await Target.GetCar(1);
             var originalCar = await Target.GetCar(1);
             modifiedCar.Tagestarif = newTarif;
-            Target.UpdateCar(modifiedCar, originalCar);
+            await Target.UpdateCar(modifiedCar, originalCar);
             var updatedCar = await Target.GetCar(1);
             Assert.AreEqual(newTarif, updatedCar.Tagestarif);
 
@@ -49,7 +38,7 @@ namespace AutoReservation.BusinessLayer.Testing
             var modifiedCustomer = await Target.GetCustomer(1);
             var originalCustomer = await Target.GetCustomer(1);
             modifiedCustomer.Nachname = newSurname;
-            Target.UpdateCustomer(modifiedCustomer, originalCustomer);
+            await Target.UpdateCustomer(modifiedCustomer, originalCustomer);
             var updatetCustomer = await Target.GetCustomer(1);
             Assert.AreEqual(newSurname, updatetCustomer.Nachname);
         }
@@ -61,9 +50,9 @@ namespace AutoReservation.BusinessLayer.Testing
             var modifiedReservation = await Target.GetReservation(1);
             var originalReservation = await Target.GetReservation(1);
             modifiedReservation.Bis = bis;
-            Target.UpdateReservation(modifiedReservation, originalReservation);
+            await Target.UpdateReservation(modifiedReservation, originalReservation);
             var updatetReservation = await Target.GetReservation(1);
-            Assert.AreEqual(bis, updatetReservation.Bis);
+            Assert.AreEqual(bis.Date, updatetReservation.Bis.Date);
         }
     }
 }

@@ -60,7 +60,7 @@ namespace AutoReservation.Common.DataTransferObjects
             get { return _auto; }
             set
             {
-                if (_auto.Equals(value))
+                if (_auto != null && _auto.Equals(value))
                 {
                     return;
                 }
@@ -74,7 +74,7 @@ namespace AutoReservation.Common.DataTransferObjects
             get { return _kunde;}
             set
             {
-                if (_kunde.Equals(value))
+                if (_kunde != null && _kunde.Equals(value))
                 {
                     return;
                 }

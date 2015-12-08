@@ -45,7 +45,7 @@ namespace AutoReservation.Common.DataTransferObjects
             get { return _nachname;}
             set
             {
-                if (_nachname.Equals(value))
+                if (_nachname != null && _nachname.Equals(value))
                 {
                     return;
                 }
@@ -59,7 +59,7 @@ namespace AutoReservation.Common.DataTransferObjects
             get { return _vorname; }
             set
             {
-                if (_vorname.Equals(value))
+                if (_vorname != null && _vorname.Equals(value))
                 {
                     return;
                 }

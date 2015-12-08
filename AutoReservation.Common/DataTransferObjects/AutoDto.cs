@@ -49,7 +49,7 @@ namespace AutoReservation.Common.DataTransferObjects
             get { return _marke;}
             set
             {
-                if (_marke.Equals(value))
+                if (_marke != null &&_marke.Equals(value))
                 {
                     return;
                 }
