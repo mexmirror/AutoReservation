@@ -8,11 +8,10 @@ namespace AutoReservation.TestEnvironment
     {
         public static void InitializeTestData()
         {
-            using (AutoReservationEntities context = new AutoReservationEntities())
+            using (var context = new AutoReservationEntities())
             {
                 var connection = (SqlConnection)context.Database.Connection;
-                var command = new SqlCommand();
-                command.Connection = connection;
+                var command = new SqlCommand {Connection = connection};
 
                 connection.Open();
 

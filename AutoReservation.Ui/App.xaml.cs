@@ -7,21 +7,20 @@ namespace AutoReservation.Ui
     /// <summary>
     /// Interaction logic for App.xaml
     /// </summary>
-    public partial class App : Application
+    public partial class App
     {
-        private IKernel kernel;
+        private IKernel _kernel;
 
         protected override void OnStartup(StartupEventArgs e)
         {
             base.OnStartup(e);
-            kernel = LoadNinject();
+            _kernel = LoadNinject();
 
-            var vm = kernel.Get<MainWindowViewModel>();
-            var view = new MainWindow();
-            view.DataContext = vm;
+            var vm = _kernel.Get<MainWindowViewModel>();
+            var view = new MainWindow {DataContext = vm};
             vm.Init();
-            this.MainWindow = view;
-            this.MainWindow.Show();
+            MainWindow = view;
+            MainWindow.Show();
         }
 
         private IKernel LoadNinject()
@@ -33,7 +32,7 @@ namespace AutoReservation.Ui
 
         protected override void OnExit(ExitEventArgs e)
         {
-            kernel.Dispose();
+            _kernel.Dispose();
             base.OnExit(e);
         }
     }

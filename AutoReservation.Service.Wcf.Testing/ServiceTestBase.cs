@@ -3,8 +3,7 @@ using AutoReservation.Common.Interfaces;
 using AutoReservation.TestEnvironment;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-using System.Collections.Generic;
-using System.Runtime.CompilerServices;
+
 using System.ServiceModel;
 using System.Threading.Tasks;
 
@@ -115,18 +114,10 @@ namespace AutoReservation.Service.Wcf.Testing
                 Geburtsdatum = DateTime.Now
 
             };
-            try
-            {
-                var temp = await Target.InsertCustomer(newCustomer);
-                var customer = await Target.GetCustomer(temp.Id);
-                Assert.AreEqual(newCustomer.Nachname, customer.Nachname);
-                Assert.AreEqual(newCustomer.Vorname, customer.Vorname);
-            }
-            catch (Exception e)
-            {
-                var x = "aaa";
-            }
-            
+            var temp = await Target.InsertCustomer(newCustomer);
+            var customer = await Target.GetCustomer(temp.Id);
+            Assert.AreEqual(newCustomer.Nachname, customer.Nachname);
+            Assert.AreEqual(newCustomer.Vorname, customer.Vorname);
         }
 
         [TestMethod]

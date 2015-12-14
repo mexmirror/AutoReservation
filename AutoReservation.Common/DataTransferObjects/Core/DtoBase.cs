@@ -14,11 +14,7 @@ namespace AutoReservation.Common.DataTransferObjects.Core
 
         void IExtendedNotifyPropertyChanged.OnPropertyChanged(string propertyName)
         {
-            if (PropertyChanged == null)
-            {
-                return;
-            }
-            PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
     }
 }

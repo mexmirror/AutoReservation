@@ -2,7 +2,7 @@
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Text;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using AutoReservation.Common.DataTransferObjects;
 using AutoReservation.Common.Extensions;
@@ -12,48 +12,44 @@ namespace AutoReservation.Ui.ViewModels
 {
     public class ReservationViewModel : ViewModelBase
     {
-        private readonly List<ReservationDto> reservationenOriginal = new List<ReservationDto>();
-        private readonly ObservableCollection<ReservationDto> reservationen = new ObservableCollection<ReservationDto>();
+        private readonly List<ReservationDto> _reservationenOriginal = new List<ReservationDto>();
 
         public ReservationViewModel(IServiceFactory factory) : base(factory)
         {
             
         }
 
-        public ObservableCollection<ReservationDto> Reservationen
-        {
-            get { return reservationen; }
-        }
+        public ObservableCollection<ReservationDto> Reservationen { get; } = new ObservableCollection<ReservationDto>();
 
-        private ReservationDto selectedReservation;
+        private ReservationDto _selectedReservation;
         public ReservationDto SelectedReservation
         {
-            get { return selectedReservation; }
+            get { return _selectedReservation; }
             set
             {
-                if (selectedReservation == value)
+                if (_selectedReservation == value)
                 {
                     return;
                 }
-                selectedReservation = value;
-                SelectedAutoId = value != null && value.Auto != null ? value.Auto.Id : 0;
-                SelectedKundeId = value != null && value.Kunde != null ? value.Kunde.Id : 0;
+                _selectedReservation = value;
+                SelectedAutoId = value?.Auto?.Id ?? 0;
+                SelectedKundeId = value?.Kunde?.Id ?? 0;
 
                 this.OnPropertyChanged(p => p.SelectedReservation);
             }
         }
 
-        private int selectedAutoId;
+        private int _selectedAutoId;
         public int SelectedAutoId
         {
-            get { return selectedAutoId; }
+            get { return _selectedAutoId; }
             set
             {
-                if (selectedAutoId == value)
+                if (_selectedAutoId == value)
                 {
                     return;
                 }
-                selectedAutoId = value;
+                _selectedAutoId = value;
                 if (SelectedReservation != null)
                 {
                     SelectedReservation.Auto = Autos.SingleOrDefault(a => a.Id == value);
@@ -63,17 +59,17 @@ namespace AutoReservation.Ui.ViewModels
             }
         }
 
-        private int selectedKundeId;
+        private int _selectedKundeId;
         public int SelectedKundeId
         {
-            get { return selectedKundeId; }
+            get { return _selectedKundeId; }
             set
             {
-                if (selectedKundeId == value)
+                if (_selectedKundeId == value)
                 {
                     return;
                 }
-                selectedKundeId = value;
+                _selectedKundeId = value;
                 if (SelectedReservation != null)
                 {
                     SelectedReservation.Kunde = Kunden.SingleOrDefault(k => k.Id == value);
@@ -83,50 +79,42 @@ namespace AutoReservation.Ui.ViewModels
             }
         }
 
-        private readonly ObservableCollection<AutoDto> autos = new ObservableCollection<AutoDto>();
-        public ObservableCollection<AutoDto> Autos
-        {
-            get { return autos; }
-        }
+        public ObservableCollection<AutoDto> Autos { get; } = new ObservableCollection<AutoDto>();
 
-        private readonly ObservableCollection<KundeDto> kunden = new ObservableCollection<KundeDto>();
-        public ObservableCollection<KundeDto> Kunden
-        {
-            get { return kunden; }
-        }
+        public ObservableCollection<KundeDto> Kunden { get; } = new ObservableCollection<KundeDto>();
 
         #region Load-Command
 
-        private RelayCommand loadCommand;
+        private RelayCommand _loadCommand;
 
         public ICommand LoadCommand
         {
             get
             {
-                return loadCommand ?? (loadCommand = new RelayCommand(param => Load(), param => CanLoad()));
+                return _loadCommand ?? (_loadCommand = new RelayCommand(async param => await Load(), param => CanLoad()));
             }
         }
 
-        protected override async void Load()
+        protected override async Task Load()
         {
             Reservationen.Clear();
-            reservationenOriginal.Clear();
+            _reservationenOriginal.Clear();
             
             Kunden.Clear();
             Autos.Clear();
 
-            foreach (KundeDto kunde in await Service.GetCustomers())
+            foreach (var kunde in await Service.GetCustomers())
             {
                 Kunden.Add(kunde);
             }
-            foreach (AutoDto auto in await Service.GetCars())
+            foreach (var auto in await Service.GetCars())
             {
                 Autos.Add(auto);
             }
-            foreach (ReservationDto reservation in await Service.GetReservations())
+            foreach (var reservation in await Service.GetReservations())
             {
                 Reservationen.Add(reservation);
-                reservationenOriginal.Add((ReservationDto)reservation.Clone());
+                _reservationenOriginal.Add(reservation.Clone());
             }
             SelectedReservation = Reservationen.FirstOrDefault();
         }
@@ -140,31 +128,31 @@ namespace AutoReservation.Ui.ViewModels
 
         #region Save-Command
 
-        private RelayCommand saveCommand;
+        private RelayCommand _saveCommand;
 
         public ICommand SaveCommand
         {
             get
             {
-                return saveCommand ?? (saveCommand = new RelayCommand(param => SaveData(), param => CanSaveData()));
+                return _saveCommand ?? (_saveCommand = new RelayCommand(param => SaveData(), param => CanSaveData()));
             }
         }
 
-        private void SaveData()
+        private async void SaveData()
         {
             foreach (var reservation in Reservationen)
             {
                 if (reservation.ReservationNr == default(int))
                 {
-                    Service.InsertReservation(reservation);
+                    await Service.InsertReservation(reservation);
                 }
                 else
                 {
-                    var original = reservationenOriginal.FirstOrDefault(ao => ao.ReservationNr == reservation.ReservationNr);
-                    Service.UpdateReservation(reservation, original);
+                    var original = _reservationenOriginal.FirstOrDefault(ao => ao.ReservationNr == reservation.ReservationNr);
+                    await Service.UpdateReservation(reservation, original);
                 }
             }
-            Load();
+            await Load();
         }
 
         private bool CanSaveData()
@@ -181,13 +169,13 @@ namespace AutoReservation.Ui.ViewModels
 
         #region New-Command
 
-        private RelayCommand newCommand;
+        private RelayCommand _newCommand;
 
         public ICommand NewCommand
         {
             get
             {
-                return newCommand ?? (newCommand = new RelayCommand(param => New(), param => CanNew()));
+                return _newCommand ?? (_newCommand = new RelayCommand(param => New(), param => CanNew()));
             }
         }
 
@@ -209,20 +197,20 @@ namespace AutoReservation.Ui.ViewModels
 
         #region Delete-Command
 
-        private RelayCommand deleteCommand;
+        private RelayCommand _deleteCommand;
 
         public ICommand DeleteCommand
         {
             get
             {
-                return deleteCommand ?? (deleteCommand = new RelayCommand(param => Delete(), param => CanDelete()));
+                return _deleteCommand ?? (_deleteCommand = new RelayCommand(param => Delete(), param => CanDelete()));
             }
         }
 
-        private void Delete()
+        private async void Delete()
         {
-            Service.DeleteReservation(SelectedReservation);
-            Load();
+            await Service.DeleteReservation(SelectedReservation);
+            await Load();
         }
 
         private bool CanDelete()

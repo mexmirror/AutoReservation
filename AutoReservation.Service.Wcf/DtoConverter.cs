@@ -25,9 +25,10 @@ namespace AutoReservation.Service.Wcf
             auto.Marke = dto.Marke;
             auto.Tagestarif = dto.Tagestarif;
 
-            if (auto is LuxusklasseAuto)
+            var luxusklasseAuto = auto as LuxusklasseAuto;
+            if (luxusklasseAuto != null)
             {
-                ((LuxusklasseAuto)auto).Basistarif = dto.Basistarif;
+                luxusklasseAuto.Basistarif = dto.Basistarif;
             }
             return auto;
         }
@@ -44,10 +45,11 @@ namespace AutoReservation.Service.Wcf
 
             if (auto is StandardAuto) { dto.AutoKlasse = AutoKlasse.Standard; }
             if (auto is MittelklasseAuto) { dto.AutoKlasse = AutoKlasse.Mittelklasse; }
-            if (auto is LuxusklasseAuto)
+            var luxusklasseAuto = auto as LuxusklasseAuto;
+            if (luxusklasseAuto != null)
             {
                 dto.AutoKlasse = AutoKlasse.Luxusklasse;
-                dto.Basistarif = ((LuxusklasseAuto)auto).Basistarif;
+                dto.Basistarif = luxusklasseAuto.Basistarif;
             }
 
 
@@ -140,7 +142,7 @@ namespace AutoReservation.Service.Wcf
             if (source == null) { return null; }
             if (converter == null) { return null; }
 
-            return source.Select(s => converter(s)).ToList();
+            return source.Select(converter).ToList();
         }
     }
 

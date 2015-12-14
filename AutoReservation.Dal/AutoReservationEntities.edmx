@@ -84,8 +84,8 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Marke" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Tagestarif" Type="Int32" Nullable="false" />
+          <Property Name="Marke" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" ConcurrencyMode="Fixed" />
+          <Property Name="Tagestarif" Type="Int32" Nullable="false" ConcurrencyMode="Fixed" />
           <NavigationProperty Name="Reservations" Relationship="Self.FK_Reservation_Auto" FromRole="Auto" ToRole="Reservation" />
         </EntityType>
         <EntityType Name="Kunde">
@@ -93,9 +93,9 @@
             <PropertyRef Name="Id" />
           </Key>
           <Property Name="Id" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="Nachname" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Vorname" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" />
-          <Property Name="Geburtsdatum" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="Nachname" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" ConcurrencyMode="Fixed" />
+          <Property Name="Vorname" Type="String" MaxLength="20" FixedLength="false" Unicode="true" Nullable="false" ConcurrencyMode="Fixed" />
+          <Property Name="Geburtsdatum" Type="DateTime" Nullable="false" Precision="3" ConcurrencyMode="Fixed" />
           <NavigationProperty Name="Reservations" Relationship="Self.FK_Reservation_Kunde" FromRole="Kunde" ToRole="Reservation" />
         </EntityType>
         <EntityType Name="Reservation">
@@ -103,10 +103,10 @@
             <PropertyRef Name="ReservationNr" />
           </Key>
           <Property Name="ReservationNr" Type="Int32" Nullable="false" annotation:StoreGeneratedPattern="Identity" />
-          <Property Name="AutoId" Type="Int32" Nullable="false" />
-          <Property Name="KundeId" Type="Int32" Nullable="false" />
-          <Property Name="Von" Type="DateTime" Nullable="false" Precision="3" />
-          <Property Name="Bis" Type="DateTime" Nullable="false" Precision="3" />
+          <Property Name="AutoId" Type="Int32" Nullable="false" ConcurrencyMode="Fixed" />
+          <Property Name="KundeId" Type="Int32" Nullable="false" ConcurrencyMode="Fixed" />
+          <Property Name="Von" Type="DateTime" Nullable="false" Precision="3" ConcurrencyMode="Fixed" />
+          <Property Name="Bis" Type="DateTime" Nullable="false" Precision="3" ConcurrencyMode="Fixed" />
           <NavigationProperty Name="Auto" Relationship="Self.FK_Reservation_Auto" FromRole="Reservation" ToRole="Auto" />
           <NavigationProperty Name="Kunde" Relationship="Self.FK_Reservation_Kunde" FromRole="Reservation" ToRole="Kunde" />
         </EntityType>

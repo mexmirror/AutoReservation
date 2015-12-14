@@ -1,5 +1,4 @@
-﻿using System;
-using System.Runtime.Serialization;
+﻿using System.Runtime.Serialization;
 using System.Text;
 using AutoReservation.Common.Extensions;
 using AutoReservation.Common.DataTransferObjects.Core;
@@ -49,7 +48,7 @@ namespace AutoReservation.Common.DataTransferObjects
             get { return _marke;}
             set
             {
-                if (_marke != null &&_marke.Equals(value))
+                if (_marke == value)
                 {
                     return;
                 }
@@ -63,7 +62,7 @@ namespace AutoReservation.Common.DataTransferObjects
             get { return _tagestarif; }
             set
             {
-                if (Math.Abs(_tagestarif - value) <= Math.Abs(_tagestarif*.00001))
+                if (_tagestarif == value)
                 {
                     return;
                 }

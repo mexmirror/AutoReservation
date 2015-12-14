@@ -1,4 +1,5 @@
-﻿using AutoReservation.TestEnvironment;
+﻿using System.Threading.Tasks;
+using AutoReservation.TestEnvironment;
 using AutoReservation.Ui.ViewModels;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using AutoReservation.Ui.Factory;
@@ -9,42 +10,39 @@ namespace AutoReservation.Ui.Testing
     [TestClass]
     public class ViewModelTest
     {
-        private IKernel kernel;
+        private IKernel _kernel;
 
         [TestInitialize]
         public void InitializeTestData()
         {
-            kernel = new StandardKernel();
-            kernel.Load("Dependencies.Ninject.xml");
+            _kernel = new StandardKernel();
+            _kernel.Load("Dependencies.Ninject.xml");
 
             TestEnvironmentHelper.InitializeTestData();
         }
-        
-        [TestMethod]
-        public void Test_AutosLoad()
-        {
-            AutoViewModel vm = new AutoViewModel(kernel.Get<IServiceFactory>());
-            vm.Init();
 
-            Assert.Inconclusive("Test not implemented.");
+        [TestMethod]
+        public async Task Test_AutosLoad()
+        {
+            var vm = new AutoViewModel(_kernel.Get<IServiceFactory>());
+            await vm.Init();
+            Assert.AreEqual(3, vm.Autos.Count);
         }
 
         [TestMethod]
-        public void Test_KundenLoad()
+        public async Task Test_KundenLoad()
         {
-            KundeViewModel vm = new KundeViewModel(kernel.Get<IServiceFactory>());
-            vm.Init();
-
-            Assert.Inconclusive("Test not implemented.");
+            var vm = new KundeViewModel(_kernel.Get<IServiceFactory>());
+            await vm.Init();
+            Assert.AreEqual(4, vm.Kunden.Count);
         }
 
         [TestMethod]
-        public void Test_ReservationenLoad()
+        public async Task Test_ReservationenLoad()
         {
-            ReservationViewModel vm = new ReservationViewModel(kernel.Get<IServiceFactory>());
-            vm.Init();
-
-            Assert.Inconclusive("Test not implemented.");
+            var vm = new ReservationViewModel(_kernel.Get<IServiceFactory>());
+            await vm.Init();
+            Assert.AreEqual(3, vm.Reservationen.Count);
         }
     }
 }

@@ -2,38 +2,25 @@
 {
     public class MainWindowViewModel
     {
-        private readonly AutoViewModel autoViewModel;
-        private readonly KundeViewModel kundeViewModel;
-        private readonly ReservationViewModel reservationViewModel;
-
         public MainWindowViewModel(AutoViewModel autoViewModel, KundeViewModel kundeViewModel,
             ReservationViewModel reservationViewModel)
         {
-            this.autoViewModel = autoViewModel;
-            this.kundeViewModel = kundeViewModel;
-            this.reservationViewModel = reservationViewModel;
+            AutoViewModel = autoViewModel;
+            KundeViewModel = kundeViewModel;
+            ReservationViewModel = reservationViewModel;
         }
 
-        public void Init()
+        public async void Init()
         {
-            autoViewModel.Init();
-            kundeViewModel.Init();
-            reservationViewModel.Init();
+            await AutoViewModel.Init();
+            await KundeViewModel.Init();
+            await ReservationViewModel.Init();
         }
 
-        public AutoViewModel AutoViewModel
-        {
-            get { return autoViewModel; }
-        }
+        public AutoViewModel AutoViewModel { get; }
 
-        public KundeViewModel KundeViewModel
-        {
-            get { return kundeViewModel; }
-        }
+        public KundeViewModel KundeViewModel { get; }
 
-        public ReservationViewModel ReservationViewModel
-        {
-            get { return reservationViewModel; }
-        }
+        public ReservationViewModel ReservationViewModel { get; }
     }
 }

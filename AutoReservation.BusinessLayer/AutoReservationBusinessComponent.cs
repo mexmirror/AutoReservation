@@ -22,7 +22,7 @@ namespace AutoReservation.BusinessLayer
         {
             using (var context = new AutoReservationEntities())
             {
-                return await context.Autos.Where(a => a.Id == id).Include("Reservations").FirstOrDefaultAsync();
+                return await context.Autos.Where(a => a.Id == id).Include(e => e.Reservations).FirstOrDefaultAsync();
             }
         }
 

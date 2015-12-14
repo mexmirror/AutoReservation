@@ -16,7 +16,8 @@
   <bind service="AutoReservation.Ui.Factory.IServiceFactory, AutoReservation.Ui"
         to="AutoReservation.Ui.Factory.LocalDataServiceAccessFactory, AutoReservation.Ui"
         scope="singleton"/>
-  <!-- Injection used when the service is somewhere else (using WCF) -->
+   
+  
   <!--<bind service="AutoReservation.Ui.Factory.IServiceFactory, AutoReservation.Ui"
         to="AutoReservation.Ui.Factory.RemoteDataAccessServiceFactory, AutoReservation.Ui"
         scope="singleton"/>-->

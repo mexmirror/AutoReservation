@@ -3,6 +3,7 @@ using AutoReservation.Common.Interfaces;
 using AutoReservation.Ui.Factory;
 using System.ComponentModel;
 using System.Text;
+using System.Threading.Tasks;
 using AutoReservation.Common.DataTransferObjects.Core;
 using AutoReservation.Common.Extensions;
 
@@ -12,27 +13,24 @@ namespace AutoReservation.Ui.ViewModels
     {
         public event PropertyChangedEventHandler PropertyChanged;
 
-        private readonly IServiceFactory factory;
+        private readonly IServiceFactory _factory;
 
         protected ViewModelBase(IServiceFactory factory)
         {
-            this.factory = factory;
+            _factory = factory;
         }
 
         protected IAutoReservationService Service { get; private set; }
 
-        public bool ServiceExists
+        public bool ServiceExists => Service  != null;
+
+        public async Task Init()
         {
-            get { return Service  != null; }
+            Service = _factory.GetService();
+            await Load();
         }
 
-        public void Init()
-        {
-            Service = factory.GetService();
-            Load();
-        }
-
-        protected abstract void Load();
+        protected abstract Task Load();
 
         protected bool Validate(IEnumerable<IValidatable> items) 
         {
@@ -51,17 +49,17 @@ namespace AutoReservation.Ui.ViewModels
             return string.IsNullOrEmpty(ErrorText);
         }
 
-        private string errorText;
+        private string _errorText;
         public string ErrorText
         {
-            get { return errorText; }
+            get { return _errorText; }
             set
             {
-                if (errorText == value)
+                if (_errorText == value)
                 {
                     return;
                 }
-                errorText = value;
+                _errorText = value;
                 this.OnPropertyChanged(p => p.ErrorText);
             }
         }
@@ -70,11 +68,7 @@ namespace AutoReservation.Ui.ViewModels
         
         void IExtendedNotifyPropertyChanged.OnPropertyChanged(string propertyName)
         {
-            if (PropertyChanged == null)
-            {
-                return;
-            }
-            PropertyChanged(this, new PropertyChangedEventArgs(propertyName));
+            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
         }
 
         #endregion

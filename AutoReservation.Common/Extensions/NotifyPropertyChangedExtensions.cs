@@ -14,12 +14,12 @@ namespace AutoReservation.Common.Extensions
             }
             if (expression == null)
             {
-                throw new ArgumentNullException("expression");
+                throw new ArgumentNullException(nameof(expression));
             }
             var memberExpression = expression.Body as MemberExpression;
             if (memberExpression == null)
             {
-                throw new ArgumentException("Expression is not a MemberExpression", "expression");
+                throw new ArgumentException("Expression is not a MemberExpression", nameof(expression));
             }
             obj.OnPropertyChanged(memberExpression.Member.Name);
         }

@@ -16,15 +16,15 @@ namespace AutoReservation.Ui.ViewModels
     {
         #region Fields
 
-        readonly Action<object> execute;
-        readonly Predicate<object> canExecute;
+        readonly Action<object> _execute;
+        readonly Predicate<object> _canExecute;
 
         #endregion
 
         #region Constructors
 
         /// <summary>
-        /// Creates a new command that can always execute.
+        /// Creates a new command that can always _execute.
         /// </summary>
         /// <param name="execute">The execution logic.</param>
         public RelayCommand(Action<object> execute) : this(execute, null)
@@ -41,11 +41,11 @@ namespace AutoReservation.Ui.ViewModels
         {
             if (execute == null)
             {
-                throw new ArgumentNullException("execute");
+                throw new ArgumentNullException(nameof(execute));
             }
 
-            this.execute = execute;
-            this.canExecute = canExecute;
+            _execute = execute;
+            _canExecute = canExecute;
         }
 
         #endregion // Constructors
@@ -55,7 +55,7 @@ namespace AutoReservation.Ui.ViewModels
         [DebuggerStepThrough]
         public bool CanExecute(object parameter)
         {
-            return canExecute == null || canExecute(parameter);
+            return _canExecute == null || _canExecute(parameter);
         }
 
         public event EventHandler CanExecuteChanged
@@ -70,7 +70,7 @@ namespace AutoReservation.Ui.ViewModels
             {
                 return;
             }
-            execute(parameter);
+            _execute(parameter);
         }
 
         #endregion

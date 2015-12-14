@@ -1,65 +1,60 @@
 ﻿using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Linq;
-using System.Windows.Documents.Serialization;
+using System.Threading.Tasks;
 using System.Windows.Input;
 using AutoReservation.Common.DataTransferObjects;
 using AutoReservation.Common.Extensions;
 using AutoReservation.Ui.Factory;
-using Ninject;
 
 namespace AutoReservation.Ui.ViewModels
 {
     public class AutoViewModel : ViewModelBase
     {
-        private readonly List<AutoDto> autosOriginal = new List<AutoDto>();
-        private readonly ObservableCollection<AutoDto> autos = new ObservableCollection<AutoDto>();
+        private readonly List<AutoDto> _autosOriginal = new List<AutoDto>();
 
         public AutoViewModel(IServiceFactory factory) : base(factory)
         {
             
         }
 
-        public ObservableCollection<AutoDto> Autos
-        {
-            get { return autos; }
-        }
+        public ObservableCollection<AutoDto> Autos { get; } = new ObservableCollection<AutoDto>();
 
-        private AutoDto selectedAuto;
+        private AutoDto _selectedAuto;
         public AutoDto SelectedAuto
         {
-            get { return selectedAuto; }
+            get { return _selectedAuto; }
             set
             {
-                if (selectedAuto == value)
+                if (_selectedAuto == value)
                 {
                     return;
                 }
-                selectedAuto = value;
+                _selectedAuto = value;
                 this.OnPropertyChanged(p => p.SelectedAuto);
             }
         }
 
         #region Load-Command
 
-        private RelayCommand loadCommand;
+        private RelayCommand _loadCommand;
 
         public ICommand LoadCommand
         {
             get
             {
-                return loadCommand ?? (loadCommand = new RelayCommand(param => Load(), param => CanLoad()));
+                return _loadCommand ?? (_loadCommand = new RelayCommand(async param => await Load(), param => CanLoad()));
             }
         }
 
-        protected override async void Load()
+        protected override async Task Load()
         {
             Autos.Clear();
-            autosOriginal.Clear();
+            _autosOriginal.Clear();
             foreach (var auto in await Service.GetCars())
             {
                 Autos.Add(auto);
-                autosOriginal.Add(auto.Clone());
+                _autosOriginal.Add(auto.Clone());
             }
             SelectedAuto = Autos.FirstOrDefault();
         }
@@ -73,31 +68,31 @@ namespace AutoReservation.Ui.ViewModels
 
         #region Save-Command
 
-        private RelayCommand saveCommand;
+        private RelayCommand _saveCommand;
 
         public ICommand SaveCommand
         {
             get
             {
-                return saveCommand ?? (saveCommand = new RelayCommand(param => SaveData(), param => CanSaveData()));
+                return _saveCommand ?? (_saveCommand = new RelayCommand(param => SaveData(), param => CanSaveData()));
             }
         }
 
-        private void SaveData()
+        private async void SaveData()
         {
             foreach (var auto in Autos)
             {
                 if (auto.Id == default(int))
                 {
-                    Service.InsertCar(auto);
+                    await Service.InsertCar(auto);
                 }
                 else
                 {
-                    var original = autosOriginal.FirstOrDefault(ao => ao.Id == auto.Id);
-                    Service.UpdateCar(auto, original);
+                    var original = _autosOriginal.FirstOrDefault(ao => ao.Id == auto.Id);
+                    await Service.UpdateCar(auto, original);
                 }
             }
-            Load();
+            await Load();
         }
 
         private bool CanSaveData()
@@ -114,13 +109,13 @@ namespace AutoReservation.Ui.ViewModels
 
         #region New-Command
 
-        private RelayCommand newCommand;
+        private RelayCommand _newCommand;
 
         public ICommand NewCommand
         {
             get
             {
-                return newCommand ?? (newCommand = new RelayCommand(param => New(), param => CanNew()));
+                return _newCommand ?? (_newCommand = new RelayCommand(param => New(), param => CanNew()));
             }
         }
 
@@ -138,20 +133,20 @@ namespace AutoReservation.Ui.ViewModels
 
         #region Delete-Command
 
-        private RelayCommand deleteCommand;
+        private RelayCommand _deleteCommand;
 
         public ICommand DeleteCommand
         {
             get
             {
-                return deleteCommand ?? (deleteCommand = new RelayCommand(param => Delete(), param => CanDelete()));
+                return _deleteCommand ?? (_deleteCommand = new RelayCommand(param => Delete(), param => CanDelete()));
             }
         }
 
-        private void Delete()
+        private async void Delete()
         {
-            Service.DeleteCar(SelectedAuto);
-            Load();
+            await Service.DeleteCar(SelectedAuto);
+            await Load();
         }
 
         private bool CanDelete()
