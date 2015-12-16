@@ -21,7 +21,7 @@ namespace AutoReservation.Common.DataTransferObjects
             get { return _geburtstdatum;}
             set
             {
-                if (_geburtstdatum == null || _geburtstdatum.Equals(value))
+                if (_geburtstdatum.Equals(value))
                 {
                     return;
                 }
