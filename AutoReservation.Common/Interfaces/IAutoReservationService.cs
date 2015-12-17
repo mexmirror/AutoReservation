@@ -9,7 +9,7 @@ namespace AutoReservation.Common.Interfaces
     public interface IAutoReservationService
     {
         [OperationContract]
-        Task<List<AutoDto>> GetCars();
+        Task<IEnumerable<AutoDto>> GetCars();
         [OperationContract]
         Task<AutoDto> GetCar(int id);
         [OperationContract]
@@ -21,7 +21,7 @@ namespace AutoReservation.Common.Interfaces
         Task<AutoDto> DeleteCar(AutoDto car);
 
         [OperationContract]
-        Task<List<ReservationDto>> GetReservations();
+        Task<IEnumerable<ReservationDto>> GetReservations();
         [OperationContract]
         Task<ReservationDto> GetReservation(int id);
         [OperationContract]
@@ -33,7 +33,7 @@ namespace AutoReservation.Common.Interfaces
         Task<ReservationDto> DeleteReservation(ReservationDto reservation);
 
         [OperationContract]
-        Task<List<KundeDto>> GetCustomers();
+        Task<IEnumerable<KundeDto>> GetCustomers();
         [OperationContract]
         Task<KundeDto> GetCustomer(int id);
         [OperationContract]

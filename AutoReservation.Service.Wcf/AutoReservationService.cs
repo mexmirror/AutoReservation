@@ -11,7 +11,7 @@ namespace AutoReservation.Service.Wcf
     public class AutoReservationService: IAutoReservationService
     {
         private readonly AutoReservationBusinessComponent _repo = new AutoReservationBusinessComponent();
-        public async Task<List<AutoDto>> GetCars()
+        public async Task<IEnumerable<AutoDto>> GetCars()
         {
             var cars = await _repo.GetCars();
             return cars.ConvertToDtos();
@@ -46,7 +46,7 @@ namespace AutoReservation.Service.Wcf
             return (await _repo.DeleteCar(car.ConvertToEntity())).ConvertToDto();
         }
 
-        public async Task<List<ReservationDto>> GetReservations()
+        public async Task<IEnumerable<ReservationDto>> GetReservations()
         {
             var reservations = await _repo.GetReservations();
             return reservations.ConvertToDtos();
@@ -82,7 +82,7 @@ namespace AutoReservation.Service.Wcf
             return (await _repo.DeleteReservation(reservation.ConvertToEntity())).ConvertToDto();
         }
 
-        public async Task<List<KundeDto>> GetCustomers()
+        public async Task<IEnumerable<KundeDto>> GetCustomers()
         {
             var customers = await _repo.GetCustomers();
             return customers.ConvertToDtos();

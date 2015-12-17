@@ -3,7 +3,7 @@ using AutoReservation.Common.Interfaces;
 using AutoReservation.TestEnvironment;
 using Microsoft.VisualStudio.TestTools.UnitTesting;
 using System;
-
+using System.Linq;
 using System.ServiceModel;
 using System.Threading.Tasks;
 
@@ -24,21 +24,21 @@ namespace AutoReservation.Service.Wcf.Testing
         public async Task Test_GetAutos()
         {
             var cars = await Target.GetCars();
-            Assert.AreEqual(3,  cars.Count);
+            Assert.AreEqual(3,  cars.Count());
         }
 
         [TestMethod]
         public async Task Test_GetKunden()
         {
             var kunden = await Target.GetCustomers();
-            Assert.AreEqual(4, kunden.Count);
+            Assert.AreEqual(4, kunden.Count());
         }
 
         [TestMethod]
         public async Task Test_GetReservationen()
         {
             var reservations = await Target.GetReservations();
-            Assert.AreEqual(3, reservations.Count);
+            Assert.AreEqual(3, reservations.Count());
         }
 
         [TestMethod]
@@ -236,21 +236,21 @@ namespace AutoReservation.Service.Wcf.Testing
         public async Task Test_DeleteKunde()
         {
             await Target.DeleteCustomer(await Target.GetCustomer(1));
-            Assert.AreEqual(3, (await Target.GetCustomers()).Count);
+            Assert.AreEqual(3, (await Target.GetCustomers()).Count());
         }
 
         [TestMethod]
         public async Task Test_DeleteAuto()
         {
             await Target.DeleteCar(await Target.GetCar(1));
-            Assert.AreEqual(2, (await Target.GetCars()).Count);
+            Assert.AreEqual(2, (await Target.GetCars()).Count());
         }
 
         [TestMethod]
         public async Task Test_DeleteReservation()
         {
             await Target.DeleteReservation(await Target.GetReservation(1));
-            Assert.AreEqual(2, (await Target.GetReservations()).Count);
+            Assert.AreEqual(2, (await Target.GetReservations()).Count());
         }
     }
 }

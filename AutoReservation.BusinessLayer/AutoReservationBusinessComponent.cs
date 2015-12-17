@@ -9,7 +9,7 @@ namespace AutoReservation.BusinessLayer
 {
     public class AutoReservationBusinessComponent
     {
-        public async Task<List<Auto>> GetCars()
+        public async Task<IEnumerable<Auto>> GetCars()
         {
             using ( var context = new AutoReservationEntities())
             {
@@ -67,7 +67,7 @@ namespace AutoReservation.BusinessLayer
             }
         }
 
-        public async Task<List<Reservation>> GetReservations()
+        public async Task<IEnumerable<Reservation>> GetReservations()
         {
             using (var context = new AutoReservationEntities())
             {
@@ -125,7 +125,7 @@ namespace AutoReservation.BusinessLayer
             }
         }
 
-        public async Task<List<Kunde>> GetCustomers()
+        public async Task<IEnumerable<Kunde>> GetCustomers()
         {
             using (var context = new AutoReservationEntities())
             {
@@ -181,7 +181,7 @@ namespace AutoReservation.BusinessLayer
             }
         }
 
-        private void HandleDbConcurrencyException<T>(AutoReservationEntities context, T original) where T : class
+        private static void HandleDbConcurrencyException<T>(DbContext context, T original) where T : class
         {
             var databaseValue = context.Entry(original).GetDatabaseValues();
             context.Entry(original).CurrentValues.SetValues(databaseValue);
